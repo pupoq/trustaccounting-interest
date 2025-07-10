@@ -17,29 +17,26 @@
 </head>
 <body>
   <div class="thanks">Спасибо! Мы получили вашу заявку.</div>
-  <div id="status"></div>
+  <div id="status">Отправка...</div>
 
   <script>
-  const email = new URLSearchParams(window.location.search).get("email");
-  const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxkZ-_cBt6dFda-mqCRCXKadKm7AN4dyNY75REPEyqD9yVa4hRSO24cVPgMfbX_7Wz1lw/exec";
+    const email = new URLSearchParams(window.location.search).get("email");
+    const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxkZ-_cBt6dFda-mqCRCXKadKm7AN4dyNY75REPEyqD9yVa4hRSO24cVPgMfbX_7Wz1lw/exec";
 
-  if (email) {
-    const url = `${WEBHOOK_URL}?email=${encodeURIComponent(email)}`;
+    if (email) {
+      const url = `${WEBHOOK_URL}?email=${encodeURIComponent(email)}`;
+      const img = new Image();
+      img.src = url;
 
-    fetch(url)
-      .then(res => {
-        if (res.ok) {
-          document.getElementById("status").innerText = "Заявка успешно отправлена.";
-        } else {
-          document.getElementById("status").innerText = "Не удалось отправить заявку.";
-        }
-      })
-      .catch(() => {
+      img.onload = () => {
+        document.getElementById("status").innerText = "Заявка успешно отправлена.";
+      };
+      img.onerror = () => {
         document.getElementById("status").innerText = "Ошибка при отправке заявки.";
-      });
-  } else {
-    document.getElementById("status").innerText = "Email не указан.";
-  }
-</script>
+      };
+    } else {
+      document.getElementById("status").innerText = "Email не указан.";
+    }
+  </script>
 </body>
 </html>

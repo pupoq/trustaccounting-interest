@@ -19,29 +19,25 @@
   <div class="thanks">Спасибо! Мы получили вашу заявку.</div>
 
   <script>
-    const email = new URLSearchParams(window.location.search).get("email");
+  const email = new URLSearchParams(window.location.search).get("email");
 
-    if (email) {
-      const now = new Date().toLocaleString("ru-RU");
-      const message = encodeURIComponent(`💌 Новый интерес!\nEmail: ${email}\nВремя: ${now}`);
-      const BOT_TOKEN = "7592263136:AAF_EVWbHcuNrouW78CbX5Vx4P7kTYpaUOg";
-      const CHAT_ID = "-1002855183247";
+  if (email) {
+    const now = new Date().toLocaleString("ru-RU");
+    const message = encodeURIComponent(`💌 Новый интерес!\nEmail: ${email}\nВремя: ${now}`);
+    const BOT_TOKEN = "7592263136:AAF_EVWbHcuNrouW78CbX5Vx4P7kTYpaUOg";
+    const CHAT_ID = "-1002855183247";
 
-      const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${message}`;
+    const telegramURL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${message}`;
 
-      // Используем <img>, чтобы обойти CORS
-      const img = new Image();
-      img.src = telegramURL;
+    // Отправляем GET-запрос через Image (без ожидания onload)
+    const img = new Image();
+    img.src = telegramURL;
 
-      img.onload = () => {
-        document.getElementById("status").innerText = "Заявка отправлена.";
-      };
-      img.onerror = () => {
-        document.getElementById("status").innerText = "Ошибка отправки.";
-      };
-    } else {
-      document.getElementById("status").innerText = "Email не указан.";
-    }
-  </script>
+    // Мгновенный редирект (без задержек)
+    window.location.href = "https://trustme.kz/contract/thanks";
+  } else {
+    document.getElementById("status").innerText = "Email не указан.";
+  }
+</script>
 </body>
 </html>
